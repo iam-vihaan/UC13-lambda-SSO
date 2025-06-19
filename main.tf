@@ -1,22 +1,26 @@
+provider "aws" {
+  region = var.aws_region
+}
 
-# Archive the Lambda function
 data "archive_file" "lambda_zip" {
   type        = "zip"
   source_file = "${path.module}/lambda/lambda_function.py"
   output_path = "${path.module}/lambda/function.zip"
 }
 
-# S3 bucket for frontend
 resource "aws_s3_bucket" "frontend_bucket" {
   bucket = var.s3_bucket_name
   acl    = "public-read"
+}
 
-  website {
-    index_document = "index.html"
+resource "aws_s3_bucket_website_configuration" "frontend_website" {
+  bucket = aws_s3_bucket.frontend_bucket.id
+
+  index_document {
+    suffix = "index.html"
   }
 }
 
-# Upload index.html to S3
 resource "aws_s3_object" "index_html" {
   bucket       = aws_s3_bucket.frontend_bucket.id
   key          = "index.html"
@@ -24,7 +28,6 @@ resource "aws_s3_object" "index_html" {
   content_type = "text/html"
 }
 
-# IAM role for Lambda
 resource "aws_iam_role" "lambda_exec_role" {
   name = "lambda_exec_role"
 
@@ -46,7 +49,6 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-# Lambda function
 resource "aws_lambda_function" "hello_world" {
   function_name    = "HelloWorldFunction"
   role             = aws_iam_role.lambda_exec_role.arn
@@ -56,7 +58,6 @@ resource "aws_lambda_function" "hello_world" {
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
 }
 
-# API Gateway
 resource "aws_api_gateway_rest_api" "hello_api" {
   name        = var.api_name
   description = var.description
@@ -97,7 +98,6 @@ resource "aws_api_gateway_deployment" "hello_deploy" {
   stage_name  = "prod"
 }
 
-# Cognito SSO
 resource "aws_cognito_user_pool" "user_pool" {
   name = "hello-world-user-pool"
 

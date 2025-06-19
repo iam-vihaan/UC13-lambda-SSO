@@ -5,7 +5,7 @@ output "api_gateway_id" {
 
 output "api_gateway_endpoint" {
   description = "The endpoint of the API Gateway"
-  value       = aws_api_gateway_deployment.hello_deploy.invoke_url
+  value       = "https://${aws_api_gateway_rest_api.hello_api.id}.execute-api.${var.aws_region}.amazonaws.com/prod"
 }
 
 output "cognito_user_pool_id" {

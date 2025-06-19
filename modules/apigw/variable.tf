@@ -48,13 +48,6 @@ variable "authorizer_id" {
   default     = null
 }
 
-# Logging & Monitoring
-variable "metrics_enabled" {
-  description = "Whether to enable metrics"
-  type        = bool
-  default     = true
-}
-
 variable "logging_level" {
   description = "Logging level (OFF, ERROR, INFO)"
   type        = string
@@ -67,33 +60,11 @@ variable "data_trace_enabled" {
   default     = false
 }
 
-variable "access_log_destination_arn" {
-  description = "ARN of the CloudWatch Logs log group for access logging"
-  type        = string
-  default     = null
-}
-
-variable "access_log_format" {
-  description = "Format string for access logs"
-  type        = string
-  default     = <<EOF
-{ "requestId":"$context.requestId", "ip":"$context.identity.sourceIp", "caller":"$context.identity.caller", "user":"$context.identity.user", "requestTime":"$context.requestTime", "httpMethod":"$context.httpMethod", "resourcePath":"$context.resourcePath", "status":"$context.status", "protocol":"$context.protocol", "responseLength":"$context.responseLength" }
-EOF
-}
-
 # Tags
 variable "tags" {
   description = "A map of tags to assign to the API Gateway resources"
   type        = map(string)
   default     = {}
-}
-
-
-
-variable "enable_cloudwatch_logging" {
-  description = "Whether to enable CloudWatch logging for API Gateway"
-  type        = bool
-  default     = true
 }
 
 

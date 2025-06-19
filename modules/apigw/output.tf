@@ -39,14 +39,6 @@ output "get_endpoint_url" {
   value       = "${aws_api_gateway_stage.this.invoke_url}/${aws_api_gateway_resource.my_resource.path_part}"
 }
 
-# CloudWatch Logs
-output "cloudwatch_log_group_arn" {
-  description = "The ARN of the CloudWatch Logs group (if access logging is enabled)"
-  value       = try(aws_api_gateway_stage.this.access_log_settings[0].destination_arn, null)
-}
-
-
-
 output "execution_arn" {
   description = "Execution ARN of the API Gateway"
   value       = aws_api_gateway_rest_api.this.execution_arn

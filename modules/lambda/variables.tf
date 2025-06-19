@@ -38,18 +38,6 @@ variable "environment_variables" {
   description = "Environment variables"
 }
 
-variable "subnet_ids" {
-  type        = list(string)
-  default     = []
-  description = "VPC subnet IDs (required for VPC)"
-}
-
-variable "security_group_ids" {
-  type        = list(string)
-  default     = []
-  description = "VPC security group IDs"
-}
-
 
 variable "tags" {
   type        = map(string)

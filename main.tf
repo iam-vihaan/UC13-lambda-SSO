@@ -1,6 +1,3 @@
-provider "aws" {
-  region = var.aws_region
-}
 
 # Archive the Lambda function
 data "archive_file" "lambda_zip" {

@@ -1,35 +1,3 @@
-# CloudWatch Logs Role for API Gateway (account-wide setting)
-resource "aws_iam_role" "api_gateway_cloudwatch" {
-  count = var.enable_cloudwatch_logging ? 1 : 0
-
-  name = "${var.api_name}-api-gw-cloudwatch-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "apigateway.amazonaws.com"
-        }
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "api_gateway_cloudwatch" {
-  count = var.enable_cloudwatch_logging ? 1 : 0
-
-  role       = aws_iam_role.api_gateway_cloudwatch[0].name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
-}
-
-resource "aws_api_gateway_account" "this" {
-  count = var.enable_cloudwatch_logging ? 1 : 0
-
-  cloudwatch_role_arn = aws_iam_role.api_gateway_cloudwatch[0].arn
-}
 
 # API Gateway REST API
 resource "aws_api_gateway_rest_api" "this" {
@@ -105,10 +73,6 @@ resource "aws_api_gateway_stage" "this" {
 
   tags = var.tags
 }
-
-
-
-
 
 # Method settings
 resource "aws_api_gateway_method_settings" "this" {

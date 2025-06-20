@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "s3_bucket_name" {
   description = "The name of the S3 bucket for frontend hosting"
   type        = string
-  default     = "kasi-hcl-bucket-uc8"
+  default     = "kasi-hcl-bucket-uc13"
 }
 
 variable "api_name" {

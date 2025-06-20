@@ -27,7 +27,10 @@ resource "aws_s3_bucket_policy" "frontend_bucket_policy" {
       }
     ]
   })
+
+  depends_on = [aws_s3_bucket_public_access_block.frontend_bucket_block]
 }
+
 
 resource "aws_s3_bucket_public_access_block" "frontend_bucket_block" {
   bucket                  = aws_s3_bucket.kasi-hcl-bucket-uc13.id

@@ -7,12 +7,12 @@ data "archive_file" "lambda_zip" {
 }
 
 # S3 bucket for frontend
-resource "aws_s3_bucket" "frontend_bucket" {
+resource "aws_s3_bucket" "kasi-hcl-bucket-uc8" {
   bucket = var.s3_bucket_name
 }
 
 # S3 bucket ACL (public-read)
-resource "aws_s3_bucket_acl" "frontend_acl" {
+resource "aws_s3_bucket_acl" "kasi-hcl-bucket-uc13_acl" {
   bucket = aws_s3_bucket.frontend_bucket.id
   acl    = "public-read"
 }

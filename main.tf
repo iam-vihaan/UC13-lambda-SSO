@@ -51,7 +51,7 @@ resource "aws_s3_bucket_website_configuration" "frontend_website" {
 resource "aws_s3_object" "index_html" {
   bucket       = aws_s3_bucket.kasi-hcl-bucket-uc13.id
   key          = "index.html"
-  source       = "${path.module}/frontend/index.html"
+  source       = "${path.module}/modules/frontend/index.html"
   content_type = "text/html"
 }
 

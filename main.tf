@@ -1,4 +1,3 @@
-
 # Archive the Lambda function
 data "archive_file" "lambda_zip" {
   type        = "zip"
@@ -16,13 +15,13 @@ resource "aws_s3_bucket_policy" "frontend_bucket_policy" {
   bucket = aws_s3_bucket.kasi-hcl-bucket-uc13.id
 
   policy = jsonencode({
-    Version = "2012-10-17"
+    Version = "2012-10-17",
     Statement = [
       {
-        Sid       = "PublicReadGetObject"
-        Effect    = "Allow"
-        Principal = "*"
-        Action    = "s3:GetObject"
+        Sid       = "PublicReadGetObject",
+        Effect    = "Allow",
+        Principal = "*",
+        Action    = "s3:GetObject",
         Resource  = "${aws_s3_bucket.kasi-hcl-bucket-uc13.arn}/*"
       }
     ]
@@ -31,7 +30,6 @@ resource "aws_s3_bucket_policy" "frontend_bucket_policy" {
   depends_on = [aws_s3_bucket_public_access_block.frontend_bucket_block]
 }
 
-
 resource "aws_s3_bucket_public_access_block" "frontend_bucket_block" {
   bucket                  = aws_s3_bucket.kasi-hcl-bucket-uc13.id
   block_public_acls       = false
@@ -39,7 +37,6 @@ resource "aws_s3_bucket_public_access_block" "frontend_bucket_block" {
   block_public_policy     = false
   restrict_public_buckets = false
 }
-
 
 # S3 website configuration
 resource "aws_s3_bucket_website_configuration" "frontend_website" {
@@ -160,7 +157,6 @@ resource "aws_cognito_user" "kasi_user" {
   temporary_password = "TempPass1234!"
 }
 
-
 resource "aws_cognito_user_pool_client" "user_pool_client" {
   name         = "hello-world-client"
   user_pool_id = aws_cognito_user_pool.user_pool.id
@@ -188,4 +184,15 @@ resource "aws_api_gateway_authorizer" "cognito_auth" {
   identity_source         = "method.request.header.Authorization"
   type                    = "COGNITO_USER_POOLS"
   provider_arns           = [aws_cognito_user_pool.user_pool.arn]
+}
+
+# Output block for token generation info
+output "cognito_auth_info" {
+  value = {
+    user_pool_id   = aws_cognito_user_pool.user_pool.id
+    client_id      = aws_cognito_user_pool_client.user_pool_client.id
+    username       = aws_cognito_user.kasi_user.username
+    temp_password  = aws_cognito_user.kasi_user.temporary_password
+  }
+  description = "Use these values to authenticate via AWS CLI or SDK and retrieve a token."
 }

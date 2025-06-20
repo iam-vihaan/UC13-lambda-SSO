@@ -151,9 +151,6 @@ resource "aws_cognito_user_pool" "user_pool" {
 resource "aws_cognito_user" "kasi_user" {
   user_pool_id = aws_cognito_user_pool.user_pool.id
   username     = "kasiuser"
-  attributes = {
-    email = "testuser@example.com"
-  }
   temporary_password = "TempPass1234!"
 }
 
@@ -196,4 +193,3 @@ output "cognito_auth_info" {
   description = "Use these values to authenticate via AWS CLI or SDK and retrieve a token."
   sensitive   = true
 }
-

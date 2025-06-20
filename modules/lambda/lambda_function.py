@@ -1,8 +1,7 @@
-def lambda_handler(event, context):
+exports.handler = async (event) => {
     return {
-        'statusCode': 200,
-        'headers': {
-            'Content-Type': 'application/json'
-        },
-        'body': '{"message": "Hello, World!"}'
-    }
+        statusCode: 200,
+        headers: { "Content-Type": "text/plain" },
+        body: "Hello, World!"
+    };
+};

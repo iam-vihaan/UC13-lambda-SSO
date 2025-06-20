@@ -13,7 +13,7 @@ resource "aws_s3_bucket" "kasi-hcl-bucket-uc13" {
 
 # S3 bucket ACL (public-read)
 resource "aws_s3_bucket_policy" "frontend_bucket_policy" {
-  bucket = aws_s3_bucket.frontend_bucket.id
+  bucket = aws_s3_bucket.kasi-hcl-bucket-uc13.id
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -23,14 +23,14 @@ resource "aws_s3_bucket_policy" "frontend_bucket_policy" {
         Effect    = "Allow"
         Principal = "*"
         Action    = "s3:GetObject"
-        Resource  = "${aws_s3_bucket.frontend_bucket.arn}/*"
+        Resource  = "${aws_s3_bucket.kasi-hcl-bucket-uc13.arn}/*"
       }
     ]
   })
 }
 
 resource "aws_s3_bucket_public_access_block" "frontend_bucket_block" {
-  bucket                  = aws_s3_bucket.frontend_bucket.id
+  bucket                  = aws_s3_bucket.kasi-hcl-bucket-uc13.id
   block_public_acls       = false
   ignore_public_acls      = false
   block_public_policy     = false

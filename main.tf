@@ -12,14 +12,14 @@ resource "aws_s3_bucket" "kasi-hcl-bucket-uc8" {
 }
 
 # S3 bucket ACL (public-read)
-resource "aws_s3_bucket_acl" "kasi-hcl-bucket-uc13_acl" {
-  bucket = aws_s3_bucket.frontend_bucket.id
+resource "aws_s3_bucket_acl" "kasi-hcl-bucket-uc8_acl" {
+  bucket = aws_s3_bucket.kasi-hcl-bucket-uc8.id
   acl    = "public-read"
 }
 
 # S3 website configuration
 resource "aws_s3_bucket_website_configuration" "frontend_website" {
-  bucket = aws_s3_bucket.frontend_bucket.id
+  bucket = aws_s3_bucket.kasi-hcl-bucket-uc8.id
 
   index_document {
     suffix = "index.html"
@@ -28,7 +28,7 @@ resource "aws_s3_bucket_website_configuration" "frontend_website" {
 
 # Upload index.html to S3
 resource "aws_s3_object" "index_html" {
-  bucket       = aws_s3_bucket.frontend_bucket.id
+  bucket       = aws_s3_bucket.kasi-hcl-bucket-uc8.id
   key          = "index.html"
   source       = "${path.module}/frontend/index.html"
   content_type = "text/html"

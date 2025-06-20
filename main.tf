@@ -14,7 +14,7 @@ resource "aws_s3_bucket" "kasi-hcl-bucket-uc13" {
 # S3 bucket ACL (public-read)
 resource "aws_s3_bucket_acl" "kasi-hcl-bucket-uc13_acl" {
   bucket = aws_s3_bucket.kasi-hcl-bucket-uc13.id
-  acl    = "public-read"
+  acl    = "private"
 }
 
 # S3 website configuration
@@ -32,7 +32,7 @@ resource "aws_s3_object" "index_html" {
   key          = "index.html"
   source       = "${path.module}/frontend/index.html"
   content_type = "text/html"
-  acl          = "public-read"
+  acl          = "private"
 }
 
 # IAM role for Lambda

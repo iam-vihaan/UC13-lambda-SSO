@@ -87,6 +87,15 @@ resource "aws_lambda_function" "hello_world" {
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
 }
 
+resource "aws_lambda_permission" "apigw_lambda" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.hello_world.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_rest_api.hello_api.execution_arn}/*/*"
+}
+
+
 # API Gateway
 resource "aws_api_gateway_rest_api" "hello_api" {
   name        = var.api_name
@@ -126,6 +135,13 @@ resource "aws_api_gateway_deployment" "hello_deploy" {
   depends_on  = [aws_api_gateway_integration.lambda_integration]
   rest_api_id = aws_api_gateway_rest_api.hello_api.id
 }
+
+resource "aws_api_gateway_stage" "hello_stage" {
+  deployment_id = aws_api_gateway_deployment.hello_deploy.id
+  rest_api_id   = aws_api_gateway_rest_api.hello_api.id
+  stage_name    = "prod"
+}
+
 
 # Cognito SSO
 resource "aws_cognito_user_pool" "user_pool" {

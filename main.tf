@@ -148,6 +148,16 @@ resource "aws_cognito_user_pool" "user_pool" {
   tags = var.tags
 }
 
+resource "aws_cognito_user" "kasi_user" {
+  user_pool_id = aws_cognito_user_pool.user_pool.id
+  username     = "kasiuser"
+  attributes = {
+    email = "testuser@example.com"
+  }
+  temporary_password = "TempPass1234!"
+}
+
+
 resource "aws_cognito_user_pool_client" "user_pool_client" {
   name         = "hello-world-client"
   user_pool_id = aws_cognito_user_pool.user_pool.id

@@ -57,6 +57,7 @@ No modules.
 |------|-------------|
 | <a name="output_api_gateway_endpoint"></a> [api\_gateway\_endpoint](#output\_api\_gateway\_endpoint) | The endpoint of the API Gateway |
 | <a name="output_api_gateway_id"></a> [api\_gateway\_id](#output\_api\_gateway\_id) | The ID of the API Gateway |
+| <a name="output_cognito_auth_info"></a> [cognito\_auth\_info](#output\_cognito\_auth\_info) | Use these values to authenticate via AWS CLI or SDK and retrieve a token. |
 | <a name="output_cognito_user_pool_client_id"></a> [cognito\_user\_pool\_client\_id](#output\_cognito\_user\_pool\_client\_id) | The ID of the Cognito User Pool Client |
 | <a name="output_cognito_user_pool_domain"></a> [cognito\_user\_pool\_domain](#output\_cognito\_user\_pool\_domain) | The domain of the Cognito User Pool |
 | <a name="output_cognito_user_pool_id"></a> [cognito\_user\_pool\_id](#output\_cognito\_user\_pool\_id) | The ID of the Cognito User Pool |

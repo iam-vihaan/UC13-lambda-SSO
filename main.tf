@@ -186,7 +186,6 @@ resource "aws_api_gateway_authorizer" "cognito_auth" {
   provider_arns           = [aws_cognito_user_pool.user_pool.arn]
 }
 
-# Output block for token generation info
 output "cognito_auth_info" {
   value = {
     user_pool_id   = aws_cognito_user_pool.user_pool.id
@@ -195,4 +194,6 @@ output "cognito_auth_info" {
     temp_password  = aws_cognito_user.kasi_user.temporary_password
   }
   description = "Use these values to authenticate via AWS CLI or SDK and retrieve a token."
+  sensitive   = true
 }
+
